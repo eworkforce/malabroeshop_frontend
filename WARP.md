@@ -110,7 +110,7 @@ VITE_API_URL=http://localhost:8000/api/v1
 #### Production
 Uses `.env.production`:
 ```bash
-VITE_API_URL=https://129.213.164.45/api/v1
+VITE_API_URL=https://malabro.ishopinafrica.com/api/v1
 ```
 
 ### Development Commands
@@ -148,7 +148,7 @@ npm run format
 
 ### Base Configuration
 - **Development**: `http://localhost:8000/api/v1`
-- **Production**: `https://129.213.164.45/api/v1`
+- **Production**: `https://malabro.ishopinafrica.com/api/v1`
 
 ### Authentication
 - JWT-based authentication
@@ -368,7 +368,7 @@ echo $VITE_API_URL
 curl http://localhost:8000/api/v1/health
 
 # Verify production backend
-curl https://129.213.164.45/api/v1/products/
+curl https://malabro.ishopinafrica.com/api/v1/products/
 ```
 
 ## Contributing

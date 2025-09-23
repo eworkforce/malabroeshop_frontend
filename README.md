@@ -106,7 +106,7 @@ MALABRO eSHOP is a modern, responsive e-commerce frontend built with Vue.js 3 an
 ### **🌐 Production Deployment**
 - **Live URL**: [https://malabroeshop.web.app](https://malabroeshop.web.app)
 - **Firebase Project**: `malabroeshop` (ID: 255424894390)
-- **Backend API**: `https://129.213.164.45/api/v1`
+- **Backend API**: `https://malabro.ishopinafrica.com/api/v1`
 
 ### **👤 Test Accounts**
 - **Customer Account**: Create new account via registration
@@ -309,14 +309,14 @@ docker run -p 80:80 malabro-frontend
 
 | Variable | Description | Example |
 |----------|-------------|---------|
-| `VITE_API_URL` | Backend API base URL | `https://129.213.164.45/api/v1` |
+| `VITE_API_URL` | Backend API base URL | `https://malabro.ishopinafrica.com/api/v1` |
 
 ---
 
 ## 🔌 API Integration
 
 ### **🌐 Backend Connection**
-- **Production API**: `https://129.213.164.45/api/v1`
+- **Production API**: `https://malabro.ishopinafrica.com/api/v1`
 - **Authentication**: JWT Bearer tokens
 - **Storage**: localStorage for session persistence
 
