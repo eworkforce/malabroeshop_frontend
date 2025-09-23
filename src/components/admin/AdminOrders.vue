@@ -44,7 +44,7 @@
             <p class="text-xs text-gray-500">{{ formatDate(order.created_at) }}</p>
           </div>
           <button
-            @click="openOrderDetails(order)"
+            @click="viewOrder(order)"
             class="w-full bg-blue-600 hover:bg-blue-700 text-white px-3 py-2 rounded text-sm font-medium transition-colors touch-manipulation"
           >
             Voir détails

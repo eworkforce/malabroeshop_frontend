@@ -192,8 +192,8 @@ import { ref, onMounted, computed } from 'vue';
 import { Plus, RefreshCw, Edit, Trash2, Package, X, History } from 'lucide-vue-next';
 import InventoryLedgerModal from '@/components/admin/InventoryLedgerModal.vue';
 import api from '@/services/api';
-import CategoryService, { Category } from '@/services/CategoryService';
-import UnitOfMeasureService, { UnitOfMeasure } from '@/services/UnitOfMeasureService';
+import CategoryService, { type Category } from '@/services/CategoryService';
+import UnitOfMeasureService, { type UnitOfMeasure } from '@/services/UnitOfMeasureService';
 
 const products = ref<any[]>([]);
 const categories = ref<Category[]>([]);

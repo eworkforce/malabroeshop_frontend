@@ -225,7 +225,7 @@ import {
   RefreshCw,
   Activity
 } from 'lucide-vue-next'
-import axios from 'axios'
+import api from '@/services/api'
 
 // Reactive data
 const loading = ref(true)
@@ -237,19 +237,7 @@ const lowStockProducts = ref<any[]>([])
 const recentMovements = ref<any[]>([])
 const movementDays = ref(7)
 
-// API base URL
-const API_BASE = 'http://localhost:8000/api/v1'
-
-// Get auth token
-const getAuthToken = () => {
-  return localStorage.getItem('auth_token')
-}
-
-// API headers
-const getHeaders = () => ({
-  'Authorization': `Bearer ${getAuthToken()}`,
-  'Content-Type': 'application/json'
-})
+// Note: API client (imported as 'api') already handles auth headers automatically
 
 // Utility functions
 const formatCurrency = (amount: number) => {
@@ -280,9 +268,7 @@ const getTotalProducts = () => {
 // API calls
 const fetchSummary = async () => {
   try {
-    const response = await axios.get(`${API_BASE}/inventory-reports/summary`, {
-      headers: getHeaders()
-    })
+    const response = await api.get('/inventory-reports/summary')
     summary.value = response.data
   } catch (err) {
     console.error('Error fetching summary:', err)
@@ -292,9 +278,7 @@ const fetchSummary = async () => {
 
 const fetchStockDistribution = async () => {
   try {
-    const response = await axios.get(`${API_BASE}/inventory-reports/stock-levels`, {
-      headers: getHeaders()
-    })
+    const response = await api.get('/inventory-reports/stock-levels')
     stockDistribution.value = response.data
   } catch (err) {
     console.error('Error fetching stock distribution:', err)
@@ -304,9 +288,7 @@ const fetchStockDistribution = async () => {
 
 const fetchTopProducts = async () => {
   try {
-    const response = await axios.get(`${API_BASE}/inventory-reports/top-products?limit=5`, {
-      headers: getHeaders()
-    })
+    const response = await api.get('/inventory-reports/top-products?limit=5')
     topProducts.value = response.data
   } catch (err) {
     console.error('Error fetching top products:', err)
@@ -316,9 +298,7 @@ const fetchTopProducts = async () => {
 
 const fetchLowStockProducts = async () => {
   try {
-    const response = await axios.get(`${API_BASE}/inventory-reports/low-stock?limit=10`, {
-      headers: getHeaders()
-    })
+    const response = await api.get('/inventory-reports/low-stock?limit=10')
     lowStockProducts.value = response.data
   } catch (err) {
     console.error('Error fetching low stock products:', err)
@@ -328,9 +308,7 @@ const fetchLowStockProducts = async () => {
 
 const fetchRecentMovements = async () => {
   try {
-    const response = await axios.get(`${API_BASE}/inventory-reports/stock-movements?days=${movementDays.value}&limit=10`, {
-      headers: getHeaders()
-    })
+    const response = await api.get(`/inventory-reports/stock-movements?days=${movementDays.value}&limit=10`)
     recentMovements.value = response.data
   } catch (err) {
     console.error('Error fetching recent movements:', err)

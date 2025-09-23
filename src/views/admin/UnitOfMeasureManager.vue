@@ -65,7 +65,7 @@
 <script setup lang="ts">
 import { ref, onMounted } from 'vue';
 import { Plus, Edit, Trash2, X } from 'lucide-vue-next';
-import UnitOfMeasureService, { UnitOfMeasure } from '@/services/UnitOfMeasureService';
+import UnitOfMeasureService, { type UnitOfMeasure } from '@/services/UnitOfMeasureService';
 
 const units = ref<UnitOfMeasure[]>([]);
 const showModal = ref(false);
@@ -88,7 +88,10 @@ const fetchUnits = async () => {
 const openModal = (unit: UnitOfMeasure | null = null) => {
   if (unit) {
     editingUnit.value = unit;
-    form.value = { ...unit };
+    form.value = { 
+      name: unit.name, 
+      abbreviation: unit.abbreviation || '' 
+    };
   } else {
     editingUnit.value = null;
     form.value = { name: '', abbreviation: '' };

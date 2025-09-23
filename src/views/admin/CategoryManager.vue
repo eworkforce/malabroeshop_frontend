@@ -75,7 +75,7 @@
 <script setup lang="ts">
 import { ref, onMounted } from 'vue';
 import { Plus, Edit, Trash2, X } from 'lucide-vue-next';
-import CategoryService, { Category } from '@/services/CategoryService';
+import CategoryService, { type Category } from '@/services/CategoryService';
 
 const categories = ref<Category[]>([]);
 const showModal = ref(false);
@@ -99,7 +99,11 @@ const fetchCategories = async () => {
 const openModal = (category: Category | null = null) => {
   if (category) {
     editingCategory.value = category;
-    form.value = { ...category };
+    form.value = { 
+      name: category.name, 
+      description: category.description || '', 
+      is_active: category.is_active 
+    };
   } else {
     editingCategory.value = null;
     form.value = { name: '', description: '', is_active: true };
