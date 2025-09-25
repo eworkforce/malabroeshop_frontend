@@ -112,6 +112,29 @@
               <span>Total</span>
               <span>{{ cartStore.totalPriceFormatted }}</span>
             </div>
+            
+            <!-- Minimum Order Progress -->
+            <div v-if="cartStore.items.length > 0" class="mt-3 pt-3 border-t border-gray-200">
+              <div class="flex justify-between text-xs text-gray-600 mb-1">
+                <span>Commande minimum</span>
+                <span>{{ formatPrice(MINIMUM_ORDER_AMOUNT) }}</span>
+              </div>
+              <div class="w-full bg-gray-200 rounded-full h-2">
+                <div 
+                  class="h-2 rounded-full transition-all duration-300 ease-out"
+                  :class="meetsMinimumOrder ? 'bg-green-500' : 'bg-amber-400'"
+                  :style="{ width: Math.min((cartStore.totalPrice / MINIMUM_ORDER_AMOUNT) * 100, 100) + '%' }"
+                ></div>
+              </div>
+              <div class="flex justify-between text-xs mt-1">
+                <span :class="meetsMinimumOrder ? 'text-green-600 font-medium' : 'text-amber-600'">
+                  {{ meetsMinimumOrder ? '✓ Minimum atteint' : `Reste ${remainingAmountFormatted}` }}
+                </span>
+                <span class="text-gray-500">
+                  {{ Math.round((cartStore.totalPrice / MINIMUM_ORDER_AMOUNT) * 100) }}%
+                </span>
+              </div>
+            </div>
           </div>
 
           <!-- Validation Errors -->
@@ -124,13 +147,33 @@
             </ul>
           </div>
 
+          <!-- Minimum Order Warning -->
+          <div v-if="!meetsMinimumOrder && cartStore.items.length > 0" class="mb-4 p-3 bg-amber-50 border border-amber-200 rounded-lg">
+            <div class="flex items-center gap-2 mb-2">
+              <AlertCircle class="w-4 h-4 text-amber-600 flex-shrink-0" />
+              <p class="text-amber-800 text-sm font-medium">Commande minimale requise</p>
+            </div>
+            <p class="text-amber-700 text-sm">
+              Ajoutez encore <strong>{{ remainingAmountFormatted }}</strong> pour atteindre le minimum de <strong>{{ formatPrice(MINIMUM_ORDER_AMOUNT) }}</strong>
+            </p>
+          </div>
+
           <!-- Checkout Button -->
           <Button 
             @click="proceedToCheckout"
-            :disabled="cartStore.validationErrors.length > 0 || cartStore.items.length === 0"
-            class="w-full bg-green-600 hover:bg-green-700 text-white py-3 touch-manipulation min-h-[44px]"
+            :disabled="cartStore.validationErrors.length > 0 || cartStore.items.length === 0 || !meetsMinimumOrder"
+            :class="{
+              'bg-green-600 hover:bg-green-700': meetsMinimumOrder && cartStore.validationErrors.length === 0,
+              'bg-gray-400 cursor-not-allowed': !meetsMinimumOrder || cartStore.validationErrors.length > 0
+            }"
+            class="w-full text-white py-3 touch-manipulation min-h-[44px] transition-colors"
           >
-            Procéder au paiement
+            <span v-if="meetsMinimumOrder">
+              Procéder au paiement
+            </span>
+            <span v-else>
+              Commande minimum {{ formatPrice(MINIMUM_ORDER_AMOUNT) }} requise
+            </span>
           </Button>
           
           <Button 
@@ -159,17 +202,37 @@
 </template>
 
 <script setup lang="ts">
+import { computed } from 'vue'
 import { useCartStore } from '@/stores/cart'
 import { useAuthStore } from '@/stores/auth'
 import api from '@/services/api'
 import { useRouter } from 'vue-router'
 import { Card } from '@/components/ui/card'
 import { Button } from '@/components/ui/button'
-import { ShoppingCart, Plus, Minus, Trash2, Shield } from 'lucide-vue-next'
+import { ShoppingCart, Plus, Minus, Trash2, Shield, AlertCircle } from 'lucide-vue-next'
 
 const cartStore = useCartStore()
 const authStore = useAuthStore()
 const router = useRouter()
+
+// Minimum order amount in CFA
+const MINIMUM_ORDER_AMOUNT = 12000
+
+// Check if total meets minimum order requirement
+const meetsMinimumOrder = computed(() => {
+  return cartStore.totalPrice >= MINIMUM_ORDER_AMOUNT
+})
+
+// Calculate remaining amount to reach minimum order
+const remainingAmount = computed(() => {
+  const remaining = MINIMUM_ORDER_AMOUNT - cartStore.totalPrice
+  return remaining > 0 ? remaining : 0
+})
+
+// Format the remaining amount
+const remainingAmountFormatted = computed(() => {
+  return formatPrice(remainingAmount.value)
+})
 
 // Format price in FCFA
 const formatPrice = (price: number): string => {
