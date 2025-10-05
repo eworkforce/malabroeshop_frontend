@@ -1,6 +1,10 @@
 <template>
-  <div class="bg-white shadow rounded-lg">
-    <div class="px-3 py-4 sm:px-4 sm:py-5 lg:p-6">
+  <div>
+    <!-- Delivery Preparation Card -->
+    <DeliveryPreparationCard />
+    
+    <div class="bg-white shadow rounded-lg">
+      <div class="px-3 py-4 sm:px-4 sm:py-5 lg:p-6">
       <div class="flex flex-col sm:flex-row sm:justify-between sm:items-center mb-4 sm:mb-6 space-y-3 sm:space-y-0">
         <h3 class="text-base sm:text-lg leading-6 font-medium text-gray-900">Gestion des Commandes</h3>
         
@@ -287,12 +291,14 @@
       </div>
     </div>
   </div>
+  </div>
 </template>
 
 <script setup lang="ts">
 import { ref, onMounted } from 'vue'
 import { X } from 'lucide-vue-next'
 import api from '@/services/api'
+import DeliveryPreparationCard from './DeliveryPreparationCard.vue'
 
 const orders = ref<any[]>([])
 const loading = ref(true)
