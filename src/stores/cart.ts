@@ -1,6 +1,7 @@
 import { defineStore } from 'pinia'
 import { ref, computed } from 'vue'
 import { useUserStore } from './user'
+import type { UnitOfMeasure } from '@/services/ProductService'
 
 export interface CartItem {
   id: number
@@ -10,6 +11,7 @@ export interface CartItem {
   quantity: number
   description?: string
   stock_quantity: number
+  unit_of_measure?: UnitOfMeasure
 }
 
 export interface Cart {
@@ -114,7 +116,8 @@ export const useCartStore = defineStore('cart', () => {
           image_url: product.image_url,
           quantity: quantity,
           description: product.description,
-          stock_quantity: product.stock_quantity
+          stock_quantity: product.stock_quantity,
+          unit_of_measure: (product as any).unit_of_measure
         }
         items.value.push(cartItem)
       }

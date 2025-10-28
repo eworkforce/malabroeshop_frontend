@@ -6,16 +6,9 @@ import { Button } from '@/components/ui/button'
 import { useCartStore } from '@/stores/cart'
 import { useUserStore } from '@/stores/user'
 import api from '@/services/api'
+import { formatPriceWithUnit } from '@/lib/utils'
+import type { Product } from '@/services/ProductService'
 import { ShoppingCart, Plus, Minus } from 'lucide-vue-next'
-
-export interface Product {
-  id: number;
-  name: string;
-  price: number;
-  image_url: string;
-  description?: string;
-  stock_quantity: number;
-}
 
 const props = defineProps<{
   product: Product;
@@ -49,7 +42,8 @@ const addToCart = (event: Event) => {
     price: props.product.price,
     image_url: props.product.image_url,
     description: props.product.description,
-    stock_quantity: props.product.stock_quantity
+    stock_quantity: props.product.stock_quantity,
+    unit_of_measure: props.product.unit_of_measure
   });
 };
 
@@ -113,7 +107,7 @@ const getImageUrl = (url: string | null) => {
     
     <CardContent class="p-3 sm:p-4 pt-0 flex flex-col justify-between flex-grow">
       <div class="mb-3 sm:mb-4">
-        <p class="text-xl sm:text-2xl font-bold text-green-600">{{ formatPrice(product.price) }}</p>
+        <p class="text-xl sm:text-2xl font-bold text-green-600">{{ formatPriceWithUnit(product) }}</p>
         <p class="text-xs sm:text-sm text-gray-500 mt-1">
           {{ product.stock_quantity > 0 ? `${product.stock_quantity} en stock` : 'Rupture de stock' }}
         </p>

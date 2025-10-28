@@ -1,5 +1,11 @@
 import apiClient from './api';
 
+export interface UnitOfMeasure {
+  id: number;
+  name: string;
+  abbreviation: string;
+}
+
 export interface Product {
   id: number;
   name: string;
@@ -8,6 +14,7 @@ export interface Product {
   image_url: string;
   stock_quantity: number;
   is_active: boolean;
+  unit_of_measure?: UnitOfMeasure;
 }
 
 class ProductService {

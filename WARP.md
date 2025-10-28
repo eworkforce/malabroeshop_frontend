@@ -6,10 +6,13 @@ MALABRO eSHOP is a modern e-commerce platform built with Vue.js 3 and TypeScript
 
 ### Key Features
 - 🛒 **E-commerce Platform**: Complete online shopping experience with cart, checkout, and order management
+- 💳 **Multiple Payment Methods**: Wave and Orange Money integration for secure mobile payments
+- 📦 **Minimum Order Requirement**: 12,000 CFA minimum order amount with visual progress indicator
+- 🚚 **Delivery Preparation**: Admin dashboard feature for managing order preparation and delivery
 - 👤 **User Management**: Registration, authentication, and profile management
-- 🔐 **Admin Dashboard**: Product, category, inventory, and user management
+- 🔐 **Admin Dashboard**: Product, category, inventory, user, order, and payment management
 - 📱 **Responsive Design**: Mobile-first approach with Tailwind CSS
-- 🌍 **Internationalization**: French language support with XOF currency
+- 🌍 **Internationalization**: French language support with XOF (FCFA) currency
 - 🎨 **Modern UI**: Built with Radix Vue components and Lucide icons
 - 🚀 **Performance**: Vite for fast development and optimized builds
 
@@ -70,19 +73,31 @@ src/
 - **`ProductService.ts`**: Product-related API calls
 - **`CategoryService.ts`**: Category management API
 - **`UnitOfMeasureService.ts`**: Units of measure management
+- **`DeliveryPreparationService.ts`**: Delivery preparation and order fulfillment API
 
 #### Core Views
 - **`HomeView.vue`**: Main landing page with product grid
 - **`ProductDetail.vue`**: Individual product details and purchase
-- **`Cart.vue`**: Shopping cart management
-- **`Checkout.vue`**: Order placement and payment
+- **`Cart.vue`**: Shopping cart management with minimum order validation
+- **`Checkout.vue`**: Multi-step checkout with Wave and Orange Money payment
+- **`OrderConfirmation.vue`**: Order confirmation page with payment instructions
 - **`Login.vue`** / **`Register.vue`**: User authentication
+- **`UIKitView.vue`**: UI component showcase and development tool
 
 #### Admin Dashboard
+- **`AdminLayout.vue`**: Admin dashboard layout wrapper with navigation
 - **`AdminOverview.vue`**: Dashboard analytics and metrics
 - **`ProductManager.vue`**: Product CRUD operations
 - **`CategoryManager.vue`**: Category management
+- **`UnitOfMeasureManager.vue`**: Units of measure management
+- **`AdminOrders.vue`**: Order management and fulfillment
+- **`AdminUsers.vue`**: User account management
+- **`AdminPayments.vue`**: Payment tracking and verification
 - **`InventoryReports.vue`**: Stock and inventory reporting
+- **`DeliveryPreparationCard.vue`**: Delivery preparation summary widget
+- **`DeliveryPreparationModal.vue`**: Detailed delivery preparation interface
+- **`InventoryLedgerModal.vue`**: Inventory transaction history viewer
+- **`MalaIABro.vue`**: Admin component (purpose TBD)
 
 ## Development Setup
 
@@ -144,7 +159,7 @@ npm run lint
 npm run format
 ```
 
-## API Integration
+### API Integration
 
 ### Base Configuration
 - **Development**: `http://localhost:8000/api/v1`
@@ -158,8 +173,13 @@ npm run format
 ### Key Endpoints
 - **Auth**: `/auth/login`, `/auth/register`, `/auth/me`
 - **Products**: `/products/`, `/products/{id}`
+- **Categories**: `/categories/`
+- **Units of Measure**: `/units-of-measure/`
 - **Cart**: Client-side cart with localStorage persistence
-- **Orders**: Order management through checkout process
+- **Orders**: `/orders/` - Order creation and management
+- **Admin Orders**: `/admin/orders/`, `/admin/orders/preparation-summary`
+- **Admin Payments**: `/admin/payments/` - Payment verification
+- **Admin Users**: `/admin/users/` - User management
 
 ## Deployment
 
@@ -245,6 +265,8 @@ npx playwright show-report
 - **Real-time Updates**: Reactive cart state with Pinia
 - **Stock Validation**: Prevents over-ordering
 - **Guest Cart**: Anonymous cart support before login
+- **Minimum Order Enforcement**: 12,000 CFA minimum order requirement with visual progress bar
+- **Dynamic Validation**: Real-time validation with user-friendly error messages
 
 ### Product Management
 - **Product Grid**: Responsive card layout
@@ -255,8 +277,11 @@ npx playwright show-report
 ### Admin Dashboard
 - **User Management**: View and manage user accounts
 - **Inventory Control**: Product, category, and stock management
-- **Order Processing**: Order status and fulfillment
-- **Analytics**: Sales and inventory reporting
+- **Order Processing**: Order status and fulfillment tracking
+- **Payment Verification**: Wave and Orange Money payment confirmation
+- **Delivery Preparation**: Order preparation summary with date filtering
+- **Analytics**: Sales and inventory reporting with ledger history
+- **Units Management**: Configure and manage units of measure
 
 ### Responsive Design
 - **Mobile First**: Optimized for mobile devices
@@ -389,15 +414,37 @@ curl https://malabro.ishopinafrica.com/api/v1/products/
 
 ---
 
+## Recent Updates (Latest Commit: October 8, 2025)
+
+### Recent Features Added
+1. **Delivery Preparation Feature** (Oct 6, 2025)
+   - Admin dashboard widget for order preparation
+   - Date-filtered preparation summary
+   - Delivery management interface
+
+2. **Minimum Order Requirement** (Oct 4, 2025)
+   - 12,000 CFA minimum order enforcement
+   - Visual progress indicator in cart
+   - User-friendly validation messages
+
+3. **Payment Method Integration**
+   - Wave mobile money payment
+   - Orange Money payment option
+   - Order confirmation page
+
+4. **Backend Migration** (Oct 3, 2025)
+   - Updated to trusted SSL domain: `malabro.ishopinafrica.com`
+
 ## Quick Start Checklist
 
 - [ ] Node.js 18+ installed
 - [ ] Dependencies installed with `npm install`
-- [ ] Environment variables configured
+- [ ] Environment variables configured (.env.local for development)
 - [ ] Development server running with `npm run dev`
-- [ ] Backend API accessible
+- [ ] Backend API accessible at production URL
 - [ ] Authentication working
-- [ ] Cart functionality tested
+- [ ] Cart functionality tested with minimum order validation
+- [ ] Payment methods (Wave/Orange Money) accessible
 - [ ] Admin dashboard accessible (if admin user)
 
 ## Useful Commands Reference

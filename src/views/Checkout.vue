@@ -151,7 +151,7 @@
               />
               <div class="flex-grow">
                 <h4 class="font-medium text-gray-900">{{ item.name }}</h4>
-                <p class="text-sm text-gray-600">{{ formatPrice(item.price) }} x {{ item.quantity }}</p>
+                <p class="text-sm text-gray-600">{{ formatPriceWithUnit(item) }} x {{ item.quantity }}</p>
               </div>
               <div class="text-right">
                 <p class="font-semibold text-gray-900">{{ formatPrice(item.price * item.quantity) }}</p>
@@ -428,6 +428,7 @@ import { ref, reactive, watch, onMounted } from 'vue'
 import { useRouter } from 'vue-router'
 import { useCartStore } from '@/stores/cart'
 import { useAuthStore } from '@/stores/auth'
+import { formatPriceWithUnit } from '@/lib/utils'
 import { Card } from '@/components/ui/card'
 import { Button } from '@/components/ui/button'
 import apiClient from '@/services/api'

@@ -46,7 +46,7 @@
                 <!-- Product Info -->
                 <div class="flex-grow min-w-0">
                   <h3 class="font-semibold text-gray-900 mb-1 text-sm sm:text-base truncate">{{ item.name }}</h3>
-                  <p class="text-green-600 font-bold text-sm sm:text-base">{{ formatPrice(item.price) }}</p>
+                  <p class="text-green-600 font-bold text-sm sm:text-base">{{ formatPriceWithUnit(item) }}</p>
                 </div>
               </div>
 
@@ -207,6 +207,7 @@ import { useCartStore } from '@/stores/cart'
 import { useAuthStore } from '@/stores/auth'
 import api from '@/services/api'
 import { useRouter } from 'vue-router'
+import { formatPriceWithUnit } from '@/lib/utils'
 import { Card } from '@/components/ui/card'
 import { Button } from '@/components/ui/button'
 import { ShoppingCart, Plus, Minus, Trash2, Shield, AlertCircle } from 'lucide-vue-next'

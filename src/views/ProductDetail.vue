@@ -7,6 +7,7 @@ import ProductService, { type Product } from '@/services/ProductService'
 import { useCartStore } from '@/stores/cart'
 import { useUserStore } from '@/stores/user'
 import api from '@/services/api'
+import { formatPriceWithUnit } from '@/lib/utils'
 
 const route = useRoute()
 const router = useRouter()
@@ -64,7 +65,8 @@ const addToCart = () => {
       price: product.value.price,
       image_url: product.value.image_url,
       description: product.value.description,
-      stock_quantity: product.value.stock_quantity
+      stock_quantity: product.value.stock_quantity,
+      unit_of_measure: product.value.unit_of_measure
     }, quantity.value)
     
     // Success feedback
@@ -120,7 +122,7 @@ const addToCart = () => {
               {{ product.name }}
             </h1>
             <p class="text-2xl font-semibold text-primary">
-              {{ formatPrice(product.price) }}
+              {{ formatPriceWithUnit(product) }}
             </p>
           </div>
 
@@ -146,7 +148,7 @@ const addToCart = () => {
               </div>
               <div class="flex justify-between">
                 <span class="font-medium">Prix:</span>
-                <span class="text-primary font-semibold">{{ formatPrice(product.price) }}</span>
+                <span class="text-primary font-semibold">{{ formatPriceWithUnit(product) }}</span>
               </div>
               <div class="flex justify-between">
                 <span class="font-medium">Disponibilité:</span>
